@@ -26,23 +26,51 @@ pipeline {
     agent any
 
     stages {
-        stage('skip-on-restart') {
+        stage('Build') {
             steps {
-                echo "This shouldn't show up on second run"
+                echo "This stage succeeds"
             }
         }
-        stage('restart') {
+        stage('Browser Tests') {
+      parallel {
+        stage('Firefox') {
+          steps {
+            sh 'echo \'setting up selenium environment\''
+            sh 'ping -c 5 localhost'
+          }
+        }
+        stage('Safari') {
+          steps {
+            sh 'echo \'setting up selenium environment\''
+            sh 'ping -c 8 localhost'
+          }
+        }
+        stage('Chrome') {
+          steps {
+            sh 'echo \'setting up selenium environment\''
+            sh 'ping -c 3 localhost'
+          }
+        }
+        stage('Internet Explorer') {
+          steps {
+            sh 'echo \'setting up selenium environment\''
+            sh 'ping -c 4 localhost'
+          }
+        }
+      }
+    }
+        stage('Static Analysis') {
             steps {
                 script {
                     if (currentBuild.getNumber() % 2 == 1) {
-                        error("Odd numbered build, failing")
+                        error("Odd numbered CloudBees Core pipeline build, this stage fails")
                     } else {
-                        echo "Even numbered build, success"
+                        echo "Even numbered build CloudBees Core pipeline build, this stage succeeds"
                     }
                 }
             }
         }
-        stage('post-restart') {
+        stage('Deployt') {
             steps {
                 echo "Now we're post-restart"
             }
