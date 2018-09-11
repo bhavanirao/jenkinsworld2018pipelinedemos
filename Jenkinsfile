@@ -34,28 +34,12 @@ pipeline {
         stage('Browser Tests') {
       parallel {
         stage('Firefox') {
-          steps {
-            sh 'echo \'setting up selenium environment\''
-            sh 'ping -c 5 localhost'
-          }
         }
         stage('Safari') {
-          steps {
-            sh 'echo \'setting up selenium environment\''
-            sh 'ping -c 8 localhost'
-          }
         }
         stage('Chrome') {
-          steps {
-            sh 'echo \'setting up selenium environment\''
-            sh 'ping -c 3 localhost'
-          }
         }
         stage('Internet Explorer') {
-          steps {
-            sh 'echo \'setting up selenium environment\''
-            sh 'ping -c 4 localhost'
-          }
         }
       }
     }
